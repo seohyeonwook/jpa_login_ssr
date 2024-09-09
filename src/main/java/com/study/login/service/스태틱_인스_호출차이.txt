@@ -1,0 +1,99 @@
+// 질문
+
+MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDto);
+
+        memberRepository.save(memberEntity);
+        이거보면 둘다 toMemberEntity 랑 save 메서드를 호출하는데 왜 하나는
+        클래스.메소드 하고 하나는 변수명.메소드 하는거야?
+
+// 답
+
+### `static` 메서드와 인스턴스 메서드의 차이
+
+**예를 들어, 주방에서 요리를 하는 상황을 생각해볼게요.**
+
+1. **클래스 메서드 (`static`)**:
+   - **주방에 있는 레시피 책**처럼 생각하면 돼요.
+   - 이 레시피 책은 주방에 있는 누구나 사용할 수 있어요.
+   - 레시피를 보기 위해 요리사가 직접 들고 다니지 않아도 되죠.
+   - **예시:** `MemberEntity.toMemberEntity(memberDto);`
+   - **왜?**: 레시피처럼 그냥 가져다 쓰기만 하면 되니까요. 주방에서 모두가 사용할 수 있어요.
+
+2. **인스턴스 메서드**:
+   - **요리사(사람)**처럼 생각해봐요.
+   - 요리를 하려면 요리사가 필요하죠.
+   - 요리사는 자신이 가진 기술과 재료를 이용해서 요리를 만들어요.
+   - **예시:** `memberRepository.save(memberEntity);`
+   - **왜?**: 요리사가 직접 요리를 해야 하니까요. 요리사는 자기만의 재료와 도구(인스턴스 속성)를 사용해요.
+
+### 결론
+- **클래스 메서드 (`static`)**는 `레시피`처럼 누구나 쉽게 가져다 쓸 수 있는 것.
+- **인스턴스 메서드**는 `요리사`처럼 특정한 사람이(객체가) 직접 해야 하는 일.
+
+그래서 `MemberEntity.toMemberEntity(memberDto)`는
+`static` 메서드로 클래스 이름으로 바로 호출하고,
+ `memberRepository.save(memberEntity)`는
+  `memberRepository`라는 '요리사'가 직접 해야 하니까 객체 이름으로 호출하는 거예요!
+
+
+// 질문 2
+
+
+    public static MemberEntity toMemberEntity(MemberDto memberDto) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setMemberEmail(memberDto.getMemberEmail());
+        memberEntity.setMemberPassword(memberDto.getMemberPassword());
+        memberEntity.setMemberName(memberDto.getMemberName());
+
+        return memberEntity;
+    } 그럼 여기서 static 빼고 변수명.메소드 이름 해도 돼?? 클래스 메서드는 어디서쓰는거고 인스턴스 메서드는 어디서 쓰는거야?
+
+
+
+// 답2
+
+`static` 키워드를 빼고 `변수명.메서드` 형태로 사용하려면 먼저 `MemberEntity` 객체를 생성해야 해요. 아래와 같이 코드를 수정할 수 있어요:
+
+```java
+MemberEntity memberEntity = new MemberEntity();
+memberEntity.toMemberEntity(memberDto); // 이렇게 하면 오류가 나요!
+```
+
+이렇게 해도 `toMemberEntity` 메서드는 여전히 클래스 메서드처럼 사용되길 원하니까, 이 코드는 맞지 않아요.
+
+### 클래스 메서드와 인스턴스 메서드 차이점과 사용법
+
+1. **클래스 메서드 (`static`)**:
+   - **언제 사용?**
+     - 객체를 만들지 않고도 사용할 때.
+     - 공통적으로 필요한 기능을 제공할 때. (예: 유틸리티 메서드)
+   - **어떻게 사용?**
+     - `클래스명.메서드명()`으로 호출.
+     - 예: `MemberEntity.toMemberEntity(memberDto);`
+
+2. **인스턴스 메서드**:
+   - **언제 사용?**
+     - 특정 객체의 상태나 데이터를 다룰 때.
+     - 객체마다 다른 동작을 해야 할 때.
+   - **어떻게 사용?**
+     - 객체를 만들어서, `객체명.메서드명()`으로 호출.
+     - 예:
+       ```java
+       MemberEntity memberEntity = new MemberEntity();
+       memberEntity.someInstanceMethod(); // 이건 static 메서드가 아니고, 멤버 변수를 다룰 때 사용!
+       ```
+
+### 왜 `toMemberEntity`는 `static` 메서드로 해야 할까?
+
+`toMemberEntity`는 `MemberDto`를 받아서 새로운 `MemberEntity` 객체를 만들어 주는 역할을 해요.
+ 이 과정에서 기존의 특정 `MemberEntity` 객체와는 상관이 없고, 공통적으로 사용할 수 있는 기능이기 때문에 `static`으로 사용하는 게 적합해요.
+
+- **즉, 클래스 메서드(`static`)는 객체와 상관없이 어디서나 호출이 가능하고,**
+- **인스턴스 메서드는 특정 객체와 연관된 동작을 해야 할 때 사용해요.**
+
+따라서 `toMemberEntity` 메서드를 객체마다 다르게 작동시키려는 게 아니라면, 계속 `static`으로 유지하는 게 맞아요!
+
+### 정리
+
+`toMemberEntity` 같은 경우는 `static`이 적합하고, 인스턴스 메서드는 특정 객체의 상태나 데이터를 다뤄야 할 때 사용해요
+. `static` 키워드를 빼면 현재 `toMemberEntity` 메서드의 사용 방식에는 맞지 않아요.

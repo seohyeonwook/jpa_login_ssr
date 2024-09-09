@@ -12,6 +12,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor // 서비스 객체 만들어주는 어노테이션
+// 자동완성 ---------인라인 완성------------------------------------------------
 public class MemberController {
     // 생성자 주입
     private final MemberService memberService;

@@ -36,5 +36,4 @@ public class MemberDto {
         return memberDto;
     }
 
-
 }
