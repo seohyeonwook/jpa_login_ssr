@@ -108,5 +108,5 @@ public class MemberService {
 
     public void deleteById(Long id) {
         memberRepository.deleteById(id);
-    } // 주석 2 // 주석 3
+    } // login 옆에 새 브랜치 눌러서 브랜치 만들고 좌측에 프로젝트에 커밋 누르고 커밋 푸쉬
 }
