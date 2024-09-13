@@ -108,5 +108,5 @@ public class MemberService {
 
     public void deleteById(Long id) {
         memberRepository.deleteById(id);
-    }
+    } // 주석 2 // 주석 3
 }
