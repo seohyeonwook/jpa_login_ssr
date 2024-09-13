@@ -1,0 +1,79 @@
+Spring Boot 애플리케이션에서 Controller, Entity, Service, DTO, Repository는
+각기 다른 역할을 수행하며, 그에 맞는 애노테이션을 자주 사용하게 됩니다. 각 계층에서 자주
+사용하거나 필수적인 애노테이션을 간단히 설명드릴게요.
+
+1. Controller
+
+@RestController:
+클래스에 붙여서 RESTful 웹 서비스의 컨트롤러로 사용되게 합니다. @Controller와 @ResponseBody를 합친 형태입니다.
+
+@RequestMapping / @GetMapping, @PostMapping, @PutMapping, @DeleteMapping:
+특정 URL 경로에 대한 HTTP 요청을 매핑하는 데 사용됩니다.
+
+@PathVariable:
+URL 경로에서 변수 값을 받아올 때 사용합니다.
+
+@RequestParam:
+URL 쿼리 파라미터를 받을 때 사용합니다.
+
+@RequestBody:
+HTTP 요청의 본문(body)을 매핑할 때 사용합니다.
+
+
+2. Entity
+
+@Entity:
+클래스가 JPA 엔티티임을 나타내고, 데이터베이스의 테이블과 매핑됩니다.
+
+@Table:
+엔티티와 매핑될 테이블의 이름을 지정할 때 사용합니다.
+
+@Id:
+기본 키를 나타내며, 식별자로 사용할 필드에 붙입니다.
+
+@GeneratedValue:
+기본 키의 값을 자동으로 생성하도록 설정합니다. (예: IDENTITY, SEQUENCE 전략)
+
+@Column:
+필드를 데이터베이스의 컬럼과 매핑하며, 컬럼의 이름, 유니크 여부 등을 설정할 수 있습니다.
+
+@ManyToOne, @OneToMany, @OneToOne, @ManyToMany:
+엔티티 간의 관계를 정의합니다.
+
+
+3. Service
+
+@Service:
+클래스가 서비스 레이어를 담당하며, 비즈니스 로직을 처리하는 빈임을 나타냅니다.
+
+@Transactional:
+메서드나 클래스에 붙여 트랜잭션 관리가 필요함을 나타냅니다. 데이터베이스 작업이 성공적으로 완료되지 않으면 롤백 처리합니다.
+
+
+4. DTO (Data Transfer Object)
+
+@Data (Lombok):
+getter, setter, toString, equals, hashCode 메서드를 자동으로 생성해줍니다. (주의: Entity에서는 사용하지 않는 것이 좋음)
+
+@Getter, @Setter (Lombok):
+각각의 필드에 대해 getter/setter 메서드를 생성합니다.
+
+@NoArgsConstructor, @AllArgsConstructor (Lombok):
+기본 생성자와 모든 필드를 받는 생성자를 자동으로 생성합니다.
+
+
+5. Repository
+
+@Repository:
+데이터 접근 계층을 담당하는 빈임을 나타내며, 예외 변환(AOP)을 지원합니다.
+
+@Query:
+메서드에 쿼리를 직접 작성하여 실행할 수 있습니다.
+
+@Modifying:
+데이터베이스를 변경하는 (INSERT, UPDATE, DELETE) 쿼리에 사용됩니다.
+
+@Transactional:
+데이터베이스 트랜잭션을 설정할 때 사용합니다. 트랜잭션 설정이 필요한 경우 함께 사용됩니다.
+이 애노테이션들은 각각의 계층에서 자주 사용되며, Spring의 기능을 더 쉽게 사용할 수 있도록 도와줍니다.
+ 각 계층은 특정한 역할을 담당하기 때문에, 역할에 맞는 애노테이션을 적절히 사용하여 구조화된 코드 작성을 할 수 있습니다.
